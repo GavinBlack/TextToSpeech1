@@ -116,7 +116,7 @@ namespace SE_1
             //catches all exceptions
             catch (Exception e)
             {
-                Console.WriteLine("Customer message " + e.Message);
+                Console.WriteLine(e.Message);
             }
         }
         static void Main(string[] args)
