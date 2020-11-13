@@ -55,8 +55,8 @@ namespace SE_1
             //gets the path to write to
             //Creates new objects for program
             //Initializes variables
-            string filePathJson = @"C:\Users\Black\Onedrive\Desktop\";
-            string filePathMp3 = @"C:\Users\Black\Onedrive\Desktop\";
+            string filePathJson = @"C:\Users\Black\Onedrive\Desktop\";  // <---- change to your desired path
+            string filePathMp3 = @"C:\Users\Black\Onedrive\Desktop\";   // <---- change to your desired path
             string text = "";
             string fullText = "";
             string[] fileNames = new string[2];
