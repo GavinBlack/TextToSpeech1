@@ -1,4 +1,4 @@
-﻿using IBM.Cloud.SDK.Core.Authentication.Iam;
+using IBM.Cloud.SDK.Core.Authentication.Iam;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -14,10 +14,11 @@ using System.Speech.Synthesis;
 using System.Threading;
 using System.Web.ModelBinding;
 using System.Globalization;
+using System.Linq.Expressions;
 
 namespace SE_1
 {
-
+    
     class Program
     {
         public static string getText()
@@ -56,12 +57,10 @@ namespace SE_1
             //Initializes variables
             string filePathJson = @"C:\Users\Black\Onedrive\Desktop\";
             string filePathMp3 = @"C:\Users\Black\Onedrive\Desktop\";
-            char choice = 'y';
             string text = "";
             string fullText = "";
-            string mp3Name = "";
-            string jsonName = "";
             string[] fileNames = new string[2];
+            char choice = 'y';
             bool active = true;
             Text t = new Text();
             TextToSpeechClient client = TextToSpeechClient.Create();
@@ -86,15 +85,16 @@ namespace SE_1
                     }
                     Console.Clear();
                 }
+
                 // 0th index is the mp3Name, 1st index is the json name
                 getFileNames(fileNames);
                 filePathMp3 += fileNames[0] + ".mp3";
                 filePathJson += fileNames[1] + ".json";
 
                 StreamWriter sw = new StreamWriter(filePathJson);
+
                 //Gets the input from the full string of text
                 SynthesisInput input = new SynthesisInput { Text = fullText };
-
                 setObjectProperties(t, fullText, fileNames);
 
                 //creates the json file with text in it
@@ -121,15 +121,23 @@ namespace SE_1
         }
         static void Main(string[] args)
         {
-            //checks to see if there are any arguments 
-            if (args.Length > 0 && args[0] == "/?")
+            try
             {
-                Console.WriteLine("Welcome to the help menu! You will be prompted to enter a string a text to be spoken");
+                //checks to see if there are any arguments 
+                if (args.Length > 0 && args[0] == "/?")
+                {
+                    Console.WriteLine("Welcome to the help menu!");
+                    Console.WriteLine("You will be prompted to enter a string a text to be spoken");
+                    Console.WriteLine("You will also be prompted for the names of the mp3 and json file");
+                }
+                start();
             }
-            start();
-
-
             
+            catch(InvalidOperationException)
+            {
+                Console.WriteLine("ERROR: Did you add the environment variable for your .json file?");
+                Console.WriteLine("Please look at the readme file to fix this error"); 
+            }
         }
     }
 }
